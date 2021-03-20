@@ -1,0 +1,8 @@
+# 编译的⽬标平台
+[build]
+target = "riscv64imac-unknown-none-elf"
+# 使⽤我们的 linker script 来进⾏链接
+[target.riscv64imac-unknown-none-elf]
+rustflags = [
+    "-C", "link-arg=-Tsrc/linker.ld",
+]
