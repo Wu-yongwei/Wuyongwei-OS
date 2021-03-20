@@ -1,0 +1,1 @@
+/home/wyw/SCUlab/os/target/riscv64imac-unknown-none-elf/debug/os: /home/wyw/SCUlab/os/src/console.rs /home/wyw/SCUlab/os/src/entry.asm /home/wyw/SCUlab/os/src/main.rs /home/wyw/SCUlab/os/src/panic.rs /home/wyw/SCUlab/os/src/sbi.rs
