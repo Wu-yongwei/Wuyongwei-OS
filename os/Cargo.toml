@@ -9,6 +9,7 @@ edition = "2018"
 [dependencies]
 riscv = {path = "src/riscv"}
 buddy_system_allocator = {path = "src/buddy_system_allocator"}
+lazy_static = { version = "1.4.0", features = ["spin_no_std"] }
 # panic 时直接终⽌，因为我们没有实现堆栈展开的功能
 [profile.dev]
 panic = "abort"

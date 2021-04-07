@@ -64,7 +64,7 @@ pub extern "C" fn rust_main() -> ! {
         assert_eq!(value, i);
     }
     println!("heap test passed,吴咏蔚!");
-
+    println!("{}", *memory::config::KERNEL_END_ADDRESS);
     println!("shutdown!");
     sbi::shutdown();
     //panic!()
