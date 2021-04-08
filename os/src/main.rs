@@ -23,6 +23,10 @@
 //!   我们使用了一个全局动态内存分配器，以实现原本标准库中的堆内存分配。
 //!   而语言要求我们同时实现一个错误回调，这里我们直接 panic
 #![feature(alloc_error_handler)]
+/// Rust 的入口函数
+///
+/// 在 `_start` 为我们进行了一系列准备之后，这是第一个被调用的 Rust 函数
+#[no_mangle]
 
 #[macro_use]
 mod console;
@@ -48,24 +52,17 @@ pub extern "C" fn rust_main() -> ! {
     interrupt::init();
     memory::init();
 
-    // 动态内存分配测试
-    use alloc::boxed::Box;
-    use alloc::vec::Vec;
-    let v = Box::new(5);
-    assert_eq!(*v, 5);
-    core::mem::drop(v);
-
-    let mut vec = Vec::new();
-    for i in 0..10000 {
-        vec.push(i);
+    // 物理页分配
+    for _ in 0..2 {
+        let frame_0 = match memory::frame::FRAME_ALLOCATOR.lock().alloc() {
+            Result::Ok(frame_tracker) => frame_tracker,
+            Result::Err(err) => panic!("{}", err)
+        };
+        let frame_1 = match memory::frame::FRAME_ALLOCATOR.lock().alloc() {
+            Result::Ok(frame_tracker) => frame_tracker,
+            Result::Err(err) => panic!("{}", err)
+        };
+        println!("{} and {}", frame_0.address(), frame_1.address());
     }
-    assert_eq!(vec.len(), 10000);
-    for (i, value) in vec.into_iter().enumerate() {
-        assert_eq!(value, i);
-    }
-    println!("heap test passed,吴咏蔚!");
-    println!("{}", *memory::config::KERNEL_END_ADDRESS);
-    println!("shutdown!");
     sbi::shutdown();
-    //panic!()
 }

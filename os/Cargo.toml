@@ -7,9 +7,11 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+algorithm = { path = 'src/algorithm' }
 riscv = {path = "src/riscv"}
 buddy_system_allocator = {path = "src/buddy_system_allocator"}
 lazy_static = { version = "1.4.0", features = ["spin_no_std"] }
+spin = "0.5.2"
 # panic 时直接终⽌，因为我们没有实现堆栈展开的功能
 [profile.dev]
 panic = "abort"
