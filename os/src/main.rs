@@ -51,7 +51,7 @@ pub extern "C" fn rust_main() -> ! {
     // 初始化各种模块
     interrupt::init();
     memory::init();
-
+    println!("Hello,吴咏蔚!");
     // 物理页分配
     for _ in 0..2 {
         let frame_0 = match memory::frame::FRAME_ALLOCATOR.lock().alloc() {
@@ -64,5 +64,6 @@ pub extern "C" fn rust_main() -> ! {
         };
         println!("{} and {}", frame_0.address(), frame_1.address());
     }
+    //println!("shutdown!");
     sbi::shutdown();
 }
