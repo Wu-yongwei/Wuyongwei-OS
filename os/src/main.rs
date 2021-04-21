@@ -53,17 +53,9 @@ pub extern "C" fn rust_main() -> ! {
     memory::init();
     println!("Hello,吴咏蔚!");
     // 物理页分配
-    for _ in 0..2 {
-        let frame_0 = match memory::frame::FRAME_ALLOCATOR.lock().alloc() {
-            Result::Ok(frame_tracker) => frame_tracker,
-            Result::Err(err) => panic!("{}", err)
-        };
-        let frame_1 = match memory::frame::FRAME_ALLOCATOR.lock().alloc() {
-            Result::Ok(frame_tracker) => frame_tracker,
-            Result::Err(err) => panic!("{}", err)
-        };
-        println!("{} and {}", frame_0.address(), frame_1.address());
-    }
+    let remap = memory::mapping::MemorySet::new_kernel().unwrap();
+    remap.activate();
+    println!("kernel remapped");
     //println!("shutdown!");
     sbi::shutdown();
 }
